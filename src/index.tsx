@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import App from './components/app/app';
+import { getCards } from './api/CitesCardInfo';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+export type BookingInfo = {
+  bookingOffers?: number,
+}
+
 root.render(
   <React.StrictMode>
-    <h1>Hello, world!</h1>
+    <App bookingOffers={getCards().length}/>
   </React.StrictMode>
 );
