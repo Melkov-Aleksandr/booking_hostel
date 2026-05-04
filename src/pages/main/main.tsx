@@ -1,9 +1,11 @@
-import CitesCard from "../../components/citys-card/citys-card";
-import { getCards } from "../../api/CitesCardInfo";
-import { BookingInfo } from "../..";
+import { OffersProps } from "../../types/offer";
+import OfferList from "../../components/offer-list/offer-list";
 
-function MainPages({bookingOffers}:BookingInfo): JSX.Element {
-    const allCards = getCards();
+type MainProps = {
+  offers: OffersProps[],
+}
+
+function MainPages({offers}: MainProps) {
     return (
         <main className="page__main page__main--index">
             <h1 className="visually-hidden">Cities</h1>
@@ -47,7 +49,7 @@ function MainPages({bookingOffers}:BookingInfo): JSX.Element {
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{bookingOffers} places to stay in Amsterdam</b>
+                  <b className="places__found">{offers.length} places to stay in Amsterdam</b>
                   <form className="places__sorting" action="#" method="get">
                     <span className="places__sorting-caption">Sort by</span>
                     <span className="places__sorting-type" tabIndex={0}>
@@ -64,14 +66,7 @@ function MainPages({bookingOffers}:BookingInfo): JSX.Element {
                     </ul>
                   </form>
                   <div className="cities__places-list places__list tabs__content">
-                    {
-                        allCards.map((card) => (
-                            <CitesCard
-                                key = {card.id}
-                                {...card}
-                            />
-                        ))
-                    }
+                    <OfferList offers={offers}/>
                   </div>
                 </section>
                 <div className="cities__right-section">
