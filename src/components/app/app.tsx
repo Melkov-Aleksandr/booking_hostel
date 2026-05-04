@@ -2,19 +2,23 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import { AppRoute, AutorizateStatus } from '../../pages/const';
 import MainPages from "../../pages/main/main";
 import PagesNotFound from '../../pages/404/pages-not-found';
-import { BookingInfo } from "../..";
 import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Offer from '../../pages/offer/offer';
 import PrivateRoute from '../private-route/private-route';
+import { OffersProps } from '../../types/offer';
 
-function App({bookingOffers}: BookingInfo) {
+type AppProps = {
+    offers: OffersProps[]
+}
+
+function App({offers}: AppProps) {
     return (
         <BrowserRouter>
             <Routes>
                 <Route
                     path={AppRoute.Main}
-                    element={<MainPages bookingOffers={bookingOffers}/>}
+                    element={<MainPages offers={offers}/>}
                 />
 
                 <Route
@@ -26,21 +30,17 @@ function App({bookingOffers}: BookingInfo) {
                     path={AppRoute.Favorites}
                     element={
                         <PrivateRoute
-                            autorizateStatus={AutorizateStatus.NoAuth}
+                            autorizateStatus={AutorizateStatus.Auth}
                         >
-                            <Favorites/>
+                            <Favorites offer={offers}/>
                         </PrivateRoute>
                     }
                 />
 
-                <Route
-                    path={AppRoute.Offer}
-                    element={<Offer />}>
-                    <Route
-                        path={':id'} element={<Offer />}
-                    />
-                </Route>
 
+                <Route
+                    path={`${AppRoute.Offer}/:id`} element={<Offer offers={offers}/>}
+                />
 
                 <Route
                     path='*'

@@ -10,3 +10,5 @@ export enum AutorizateStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const [minCommentLength, maxCommentLength] = [50, 1945];
